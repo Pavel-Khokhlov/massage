@@ -26,6 +26,10 @@ import DiplomasModal from '@/components/modals/DiplomasModal.vue'
 </template>
 
 <style lang="sass">
+@import @/sass/index
+*
+  /* Синяя подсветка исчезает без следа */
+  -webkit-tap-highlight-color: transparent
 a:active,
 a:focus,
 input,
@@ -50,9 +54,11 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
     margin: 0 auto
     padding-top: 0
     padding-bottom: min(100px, 10vw)
+    box-sizing: border-box
   &.service
     // background: rgb(242, 242, 242)
     width: min(1000px, 100%)
+    height: calc(100vh - $header-height)
     margin: 0 auto
     padding-top: 0
     padding-bottom: min(100px, 10vw)
@@ -62,7 +68,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
     background-position: center
     background-size: cover
     background-repeat: no-repeat
-    padding: min(50px, 5vw) 0
+    padding: min(70px, 5vw) 0
     @media screen and (min-width: 768px)
       background: url('./assets/images/backgrounds/feedbacksH.webp')
       background-repeat: no-repeat
@@ -70,9 +76,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
       background-size: cover
   &__title
     margin: 0 auto
-    font-size: min(40px, 6vw)
-    line-height: 1.3
-    font-family: 'RobotoCondensed'
+    font-size: $text-section-title
+    line-height: 1.4
     font-weight: 500
     margin-bottom: min(50px, 10vw)
     &.feedbacks
@@ -84,17 +89,21 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
     @media screen and (min-width: 768px)
       text-align: center
   &__subtitle
-    font-size: min(28px, 5.5vw)
+    font-size: $text-section-subtitle
     line-height: 1.3
-    font-weight: 500
+    font-weight: 400
+    margin: 0
+  &__small-title
+    font-size: $text-section-small-title
+    line-height: 1.3
+    font-weight: 400
   &__text
-    font-size: min(20px, 4.5vw)
+    font-size: $text-section-text
     line-height: 1.3
-    padding: min(40px, 5vw) 0
+    padding: min(40px, 6vw) 0
     margin: 0
     &.feedbacks
-      font-family: 'RobotoCondensed'
-      font-weight: 400
+      font-weight: 300
       color: white
       width: min(600px, 90vw)
       margin: 0 auto

@@ -83,22 +83,22 @@ function handleClickLink(id) {
       flex-direction: row
       gap: min(30px, 3vw)
       padding: 0
+      margin: 0
     &.modal
       flex-direction: column
       gap: 6vw
   &__link
-    font-family: 'RobotoCondensed'
+    display: block
     font-size: min(30px, 7vw)
     font-weight: 400
     text-decoration: none
     color: $base-black-color
     cursor: pointer
-    padding: 20px
+    padding: 0 20px
     &.header
       padding: 10px 0
       font-size: min(18px, 7vw)
   &__button
-    font-family: 'RobotoCondensed'
     font-size: min(18px, 7vw)
     font-weight: 400
     padding: 0

@@ -15,7 +15,7 @@
           class="service__button"
           @click="isCurrentServiceShown(service.id)"
         >
-          <h2 class="service__title">{{ service.title }}</h2>
+          <h2 class="section__subtitle">{{ service.title }}</h2>
           <img
             src="@/assets/images/icons/chevron.svg"
             alt="иконка список"
@@ -29,7 +29,7 @@
           alt="изображение кинезио"
           class="service__image"
         />
-        <h3 class="section__subtitle">Показания:</h3>
+        <h3 class="section__small-title">Показания:</h3>
         <ul class="service__list">
           <li v-for="item in service.indications" :key="item" class="service__list_item">
             {{ item }}
@@ -56,8 +56,9 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
         flex-direction: column
         gap: min(30px, 6vw)
         &_item
-            font-family: 'Trebuchet'
-            font-size: min(20px, 4.5vw)
+            font-size: $text-section-text
+            font-weight: 300
+            line-height: 1.3
     &__block
         background: $base-white-color
         height: min(70px, 12vw)
@@ -81,10 +82,6 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
         background: transparent
         cursor: pointer
         padding: 0
-    &__title
-        margin: 0
-        font-size: min(30px, 5vw)
-        font-weight: 400
     &__icon
         transition: all 0.5s ease
         &._active
@@ -97,7 +94,6 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
         border-radius: min(20px, 2vw)
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)
     &__text
-        font-family: 'Trebuchet'
         font-size: min(18px, 4vw)
         line-height: 1.3
 </style>

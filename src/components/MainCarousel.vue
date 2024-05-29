@@ -127,7 +127,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import ../sass/index
+@import @/sass/index
 .section
     position: relative
     margin: 0 -min(50px, 3vw)
@@ -172,21 +172,18 @@ export default {
             gap: min(110px, 10vw)
     &__title
         text-align: start
-        font-family: 'Trebuchet'
-        font-weight: 700
-        font-size: min(34px, 6vw)
+        font-weight: 500
+        font-size: $text-main-title
         color: $base-black-color
         text-shadow: 1px 1px 2px rgba($base-black-color, 0.1)
         margin: 0
         @media screen and (min-width: 1000px)
             font-size: min(120px, 9vw)
             color: rgba($base-white-color, 0.95)
-            font-family: 'LobsterRegular'
             text-shadow: 2px 2px 7px rgba($base-black-color, 0.4)
     &__text
-        font-family: 'Trebuchet'
         text-align: start
-        font-size: min(18px, 4vw)
+        font-size: $text-main-text
         color: $base-black-color
         // text-shadow: 1px 1px 2px rgba($base-black-color, 0.6)
         margin: 0
@@ -202,9 +199,8 @@ export default {
         background: #2c3e50
         background: -webkit-linear-gradient(to right, #3498db, #2c3e50)
         background: linear-gradient(to right, #3498db, #2c3e50)
-        font-family: 'RobotoCondensed'
         font-weight: 400
-        font-size: min(24px, 5vw)
+        font-size: $text-main-button
         color: $base-white-color
         box-shadow: 2px 2px 4px rgba($base-black-color, 0.3)
         margin-top: 5vw
@@ -218,6 +214,8 @@ export default {
             gap: 30px
         @media screen and (min-width: 1000px)
             border: 0.5px solid rgba($base-white-color, 1)
+        & > span
+          font-family: RobotoFlex
     &__nav
         position: absolute
         top: 0

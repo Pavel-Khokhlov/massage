@@ -32,9 +32,9 @@ function initialFormState() {
 
 function initialFormError() {
   return {
-    name: '',
-    contact: '',
-    message: ''
+    name: { error: '', status: false },
+    contact: { error: '', status: false },
+    message: { error: '', status: false }
   }
 }
 
@@ -128,37 +128,53 @@ export const store = createStore({
       const { id, value } = payload.target
       if (id === 'name') {
         state.formState.name = value
-        if (value.length === 0) return (state.formError.name = 'Поле должно быть заполнено')
+        if (value.length === 0)
+          return (state.formError.name = { error: 'Поле должно быть заполнено', status: false })
         if (value.length < 2)
-          return (state.formError['name'] = 'Имя должно быть больше одной буквы')
-        if (!REG_NAME.test(value)) return (state.formError['name'] = `Только буквы, пробел - _ '`)
-        return (state.formError['name'] = '')
+          return (state.formError.name = {
+            error: 'Имя должно быть больше одной буквы',
+            status: false
+          })
+        if (!REG_NAME.test(value))
+          return (state.formError.name = { error: 'Только буквы, пробел - _', status: false })
+        return (state.formError.name = { error: '', status: true })
       }
       if (id === 'contact') {
         state.formState.contact = value
-        if (value.length === 0) return (state.formError.contact = 'Поле должно быть заполнено')
+        if (value.length === 0)
+          return (state.formError.contact = { error: 'Поле должно быть заполнено', status: false })
         if (this.contactType === 'telegram') {
-          if (!/^@/.test(value)) return (state.formError.contact = 'Первый символ @')
+          if (!/^@/.test(value))
+            return (state.formError.contact = { error: 'Первый символ @', status: false })
           if (!REG_TELEGRAM.test(value))
-            return (state.formError.contact = 'Только латинские буквы и _, больше 5 символов')
+            return (state.formError.contact = {
+              error: 'Только латинские буквы и _, больше 5 символов',
+              status: false
+            })
         }
         if (state.formState.contactType === 'email') {
           if (!REG_EMAIL.test(value))
-            return (state.formError.contact = 'Введите корректный адрес почты')
+            return (state.formError.contact = {
+              error: 'Введите корректный адрес почты',
+              status: false
+            })
         }
         if (state.formState.contactType === 'phone' || state.formState.contactType === 'whatsapp') {
-          if (!/^\+/.test(value)) return (state.formError.contact = 'Первый символ +')
+          if (!/^\+/.test(value))
+            return (state.formError.contact = { error: 'Первый символ +', status: false })
           if (!REG_PHONE.test(value))
-            return (state.formError.contact = 'Введите корректный номер, больше 10 цифр')
+            return (state.formError.contact = {
+              error: 'Введите корректный номер, больше 10 цифр',
+              status: false
+            })
         }
-        return (state.formError.contact = '')
+        return (state.formError.contact = { error: '', status: true })
       }
       if (id === 'message') {
         state.formState.message = value
-        if (value.length === 0) return (state.formError.message = 'Поле должно быть заполнено')
-        if (value.length < 30)
-          return (state.formError.message = 'Сообщение должно быть не менее 30 символов')
-        return (state.formError.message = '')
+        if (value.length === 0)
+          return (state.formError.message = { error: 'Поле должно быть заполнено', status: true })
+        return (state.formError.message = { error: '', status: true })
       }
     },
 

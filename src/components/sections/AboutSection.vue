@@ -63,20 +63,21 @@ const isDiplomaShown = (value) => store.commit('isDiplomaShown', value)
 </script>
 
 <style lang="sass">
+@import @/sass/index
 .about
   &__top
     display: grid
     grid-template-columns: 1fr 2fr
     gap: min(30px, 6vw)
+    margin-bottom: min(100px, 10vw)
     @media screen and (max-width: 768px)
       display: flex
       flex-direction: column
   &__portrait
-    width: 100%
+    width: min(300px, 80%)
   &__me
     width: 100%
-    font-family: 'Trebuchet'
-    font-size: min(20px, 4.5vw)
+    font-size: $text-section-text
     line-height: 1.3
     font-weight: 300
     margin: 0
@@ -94,12 +95,10 @@ const isDiplomaShown = (value) => store.commit('isDiplomaShown', value)
     box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1)
     padding: min(20px, 3vw)
     &-time
-      font-family: 'Trebuchet'
-      font-size: min(20px, 5vw)
+      font-size: $text-section-text-big
       margin: 0 0 12px
     &-place
-      font-family: 'Trebuchet'
-      font-size: min(18px, 4vw)
+      font-size: $text-section-text
       margin: 0
   &__certificates
     display: flex

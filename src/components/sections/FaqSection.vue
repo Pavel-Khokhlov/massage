@@ -1,6 +1,6 @@
 <template>
   <section class="section faq" id="911364">
-    <h2 class="section__title">Вопрос-Ответ</h2>
+    <h2 class="section__title">Вопрос - Ответ</h2>
     <ul class="faq__list">
       <li v-for="faq in faqs" :key="faq.id" class="faq__item">
         <p class="faq__text question">{{ faq.question }}</p>
@@ -34,7 +34,6 @@ import faqs from '@/data/dataFaqs.js'
     flex-direction: column
     gap: min(30px, 5vw)
   &__text
-    font-family: 'Trebuchet'
     font-weight: 400
     line-height: 1.3
     position: relative
@@ -66,6 +65,7 @@ import faqs from '@/data/dataFaqs.js'
         border: none
     &.answer
       font-weight: 300
+      line-height: 1.5
       margin: 0 10px 0 0
       font-size: min(20px, 4vw)
       max-width: min(900px,80vw)

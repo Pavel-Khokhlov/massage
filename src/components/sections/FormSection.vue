@@ -28,7 +28,7 @@
           autocomplete="off"
           @input="handleChange($event)"
         />
-        <p class="form__error">{{ $store.state.formError.name }}</p>
+        <p class="form__error">{{ $store.state.formError.name.error }}</p>
       </div>
       <div class="form__field">
         <label for="contact" class="form__label">{{
@@ -42,7 +42,7 @@
           class="form__input"
           @input="handleChange($event)"
         />
-        <p class="form__error">{{ $store.state.formError.contact }}</p>
+        <p class="form__error">{{ $store.state.formError.contact.error }}</p>
       </div>
       <div class="form__field">
         <label for="message" class="form__label">Сообщение, отзыв</label>
@@ -56,7 +56,7 @@
           cols="30"
           @input="handleChange($event)"
         ></textarea>
-        <p class="form__error">{{ $store.state.formError.message }}</p>
+        <p class="form__error">{{ $store.state.formError.message.error }}</p>
       </div>
       <div class="form__control">
         <button
@@ -138,6 +138,9 @@ export default {
       for (let key in this.$store.state.formState) {
         if (this.$store.state.formState[key] == null || this.$store.state.formState[key] == '')
           return (this.isFormCompleted = false)
+      }for (let key in this.$store.state.formError) {
+        if (this.$store.state.formError[key].error == '' && !this.$store.state.formError[key].status)
+          return (this.isFormCompleted = false)
       }
       return (this.isFormCompleted = true)
     }
@@ -146,11 +149,12 @@ export default {
 </script>
 
 <style lang="sass">
+@import @/sass/index
 .form
-    margin-top: min(30px, 5vw)
+    margin-top: min(55px, 10vw)
     display: flex
     flex-direction: column
-    gap: min(25px, 5vw)
+    gap: min(28px, 7vw)
     &__radiobuttons
         display: flex
         flex-direction: row
@@ -169,8 +173,7 @@ export default {
         gap: min(5px, 1vw)
     &__input
         width: min(400px, 100%)
-        font-family: 'Trebuchet'
-        font-size: min(20px, 5vw)
+        font-size: $text-section-text-big
         font-weight: 400
         height: min(50px, 10vw)
         border: none
@@ -180,17 +183,19 @@ export default {
           outline: none
           border-bottom: 1px solid rgba(blue, 0.5)
         &::placeholder
-          color: rgba(grey, 0.8)
-          font-weight: 400
+          color: rgba(grey, 0.6)
+          font-weight: 200
+          font-size: $text-section-text-big
         &_textarea
+          font-size: $text-section-text-big
+          font-family: RobotoFlex
           width: 100%
           height: auto
     &__label
-        font-family: 'Trebuchet'
-        font-size: min(16px, 3.5vw)
+        font-size: $text-form-label
         font-weight: 400
         margin: 0
-        color: rgba(black, 1)
+        color: rgba(black, 0.7)
         &_radio
             margin-top: min(50px, 10vw)
             margin-bottom: min(20px, 3vw)
@@ -209,7 +214,7 @@ export default {
         background: transparent
         border-radius: min(12px, 2vw)
         padding: 10px 30px
-        font-size: min(24px, 5vw)
+        font-size: $text-main-button
         cursor: pointer
         &_clear
             border: 1px solid rgba(blue, 0.5)
@@ -236,7 +241,7 @@ export default {
             &._active
                 transform: scale(1)
     &__error
-        font-size: min(14px, 3vw)
+        font-size: $text-form-error
         padding: 0
         margin: 0
         color: red
