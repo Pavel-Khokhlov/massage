@@ -91,6 +91,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
     font-size: $text-section-subtitle
     line-height: 1.3
     font-weight: 400
+    color: rgba($base-black-color, 0.9)
     margin: 0
   &__small-title
     font-size: $text-section-small-title

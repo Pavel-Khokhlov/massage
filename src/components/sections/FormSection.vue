@@ -35,11 +35,14 @@
           ENUM_COMMUNICATION[$store.state.formState.contactType]
         }}</label>
         <input
+          ref="contact"
           type="text"
           id="contact"
+          name="contact"
           :value="$store.state.formState.contact"
           placeholder="Ваш контакт"
           class="form__input"
+          autocomplete="off"
           @input="handleChange($event)"
         />
         <p class="form__error">{{ $store.state.formError.contact.error }}</p>
@@ -54,6 +57,7 @@
           class="form__input form__input_textarea"
           rows="5"
           cols="30"
+          autocomplete="off"
           @input="handleChange($event)"
         ></textarea>
         <p class="form__error">{{ $store.state.formError.message.error }}</p>
@@ -138,11 +142,23 @@ export default {
       for (let key in this.$store.state.formState) {
         if (this.$store.state.formState[key] == null || this.$store.state.formState[key] == '')
           return (this.isFormCompleted = false)
-      }for (let key in this.$store.state.formError) {
-        if (this.$store.state.formError[key].error == '' && !this.$store.state.formError[key].status)
+      }
+      for (let key in this.$store.state.formError) {
+        if (
+          this.$store.state.formError[key].error == '' &&
+          !this.$store.state.formError[key].status
+        )
           return (this.isFormCompleted = false)
       }
       return (this.isFormCompleted = true)
+    },
+    focus() {
+      this.$refs.contact.name = 'fuck'
+      console.log('here will be focus', this.$refs.contact.name)
+    },
+    blur() {
+      this.$refs.contact.name = 'contact'
+      console.log('here will be focus', this.$refs.contact.name)
     }
   }
 }
@@ -177,13 +193,13 @@ export default {
         font-weight: 400
         height: min(50px, 10vw)
         border: none
-        border-bottom: 1px solid rgba(grey, 0.5)
+        border-bottom: 1px solid $base-silver-color
         resize: none
         &:focus
           outline: none
-          border-bottom: 1px solid rgba(blue, 0.5)
+          border-bottom: 1px solid $base-brand-color
         &::placeholder
-          color: rgba(grey, 0.6)
+          color: $base-silver-color
           font-weight: 200
           font-size: $text-section-text-big
         &_textarea
@@ -217,16 +233,16 @@ export default {
         font-size: $text-main-button
         cursor: pointer
         &_clear
-            border: 1px solid rgba(blue, 0.5)
-            color: rgba(blue, 0.5)
+            border: 1px solid $base-brand-color
+            color: $base-brand-color
             &._disabled
-                border: 1px solid rgba(grey, 0.5)
-                color: rgba(grey, 0.5)
+                border: 1px solid $base-silver-color
+                color: $base-silver-color
         &_submit
             color: rgba(white, 1)
-            background: rgba(grey, 0.5)
+            background: $base-silver-color
             &._active
-                background: rgba(blue, 0.5)
+                background: $base-brand-color
         &_radio
             width: 40px
             height: 40px

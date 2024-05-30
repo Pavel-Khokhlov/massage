@@ -62,14 +62,14 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
     &__block
         background: $base-white-color
         height: min(70px, 12vw)
-        transition: all 0.5s ease
+        transition: $app-transition05
         border-radius: 10px
         box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1)
         overflow: hidden
         padding: 0 min(40px, 3vw)
         &._active
             height: auto
-            transition: all 0.5s ease
+            transition: $app-transition05
             padding-bottom: min(30px, 5vw)
     &__button
         width: 100%
@@ -83,7 +83,7 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
         cursor: pointer
         padding: 0
     &__icon
-        transition: all 0.5s ease
+        transition: $app-transition05
         &._active
             transform: rotate(180deg)
             transition: all 0.5s ease
@@ -92,8 +92,7 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
         width: min(400px, 100%)
         margin: 0 auto
         border-radius: min(20px, 2vw)
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)
     &__text
-        font-size: min(18px, 4vw)
+        font-size: $text-main-text
         line-height: 1.3
 </style>

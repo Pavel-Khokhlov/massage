@@ -159,7 +159,7 @@ export default {
         height: min(60px, 12vw)
         border: none
         border-radius: min(12px, 2vw)
-        background: rgba(0, 0, 255, 0.5)
+        background: $base-brand-color
         // background: -webkit-linear-gradient(to right, #3498db, #2c3e50)
         // background: linear-gradient(to right, #3498db, #2c3e50)
         font-weight: 400

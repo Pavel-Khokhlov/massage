@@ -41,7 +41,7 @@ import faqs from '@/data/dataFaqs.js'
     &.question
       margin: 0 0 0 10px
       font-size: min(24px, 5vw)
-      background-color: rgba(blue, 0.5)
+      background-color: $base-brand-color
       color: white
       border-radius: 15px 15px 15px 0
       max-width: min(700px, 60vw)
@@ -52,7 +52,7 @@ import faqs from '@/data/dataFaqs.js'
         left: max(-20px, -3vw)
         width: min(20px, 3vw)
         height: min(20px, 3vw)
-        background-color: rgba(blue, 0.5)
+        background-color: $base-brand-color
       &::after
         content: ''
         position: absolute

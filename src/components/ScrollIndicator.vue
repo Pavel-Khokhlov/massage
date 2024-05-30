@@ -36,10 +36,11 @@ export default {
 </script>
 
 <style lang="sass">
+@import @/sass/index
 .scroll
     position: absolute
     top: 0
     left: 0
     height: 2px
-    background: rgba(0,0,255,0.5)
+    background: $base-brand-color
 </style>
