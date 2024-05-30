@@ -3,14 +3,14 @@
     <carousel
       ref="carousel"
       v-model="currentSlide"
-      :items-to-show="itemsToShow"
+      :items-to-show="items"
       :autoplay="$store.state.isMenuOpen || $store.state.isDiplomasOpen ? 0 : 5000"
       :wrap-around="true"
       :transition="600"
       :pauseAutoplayOnHover="true"
       :currentSlide="currentSlide"
     >
-      <slide v-for="slide in slides" :key="slide.id + 20">
+      <slide v-for="slide in props.slides" :key="slide.id + 20">
         <div class="carousel__stack">
           <img alt="avatar" class="carousel__avatar" :src="`${images[`${slide.avatar}`]}`" />
           <h3 class="carousel__title">{{ slide.name }}</h3>
@@ -20,8 +20,8 @@
       </slide>
 
       <template #addons>
-        <button @click="prevSlide" class="carousel__button prev" />
-        <button @click="nextSlide" class="carousel__button next" />
+        <button @click="currentSlide--" class="carousel__button prev" />
+        <button @click="currentSlide++" class="carousel__button next" />
         <div class="carousel__pagination">
           <button
             v-for="(slide, index) in slides"
@@ -29,7 +29,7 @@
             type="button"
             class="carousel__dot"
             :class="{ _active: currentSlide === index }"
-            @click="handleClickPage(index)"
+            @click="() => (currentSlide = index)"
           ></button>
         </div>
       </template>
@@ -37,55 +37,48 @@
   </section>
 </template>
 
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import images from '../assets/images/feedbackCarousel/index'
+
+const currentSlide = ref(0)
+
+const items = ref(1.1)
+
+const props = defineProps({
+  slides: {
+    type: Array
+  }
+})
+
+const handleResize = () => {
+  let bodyWidth = Math.max(
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.body.clientWidth,
+    document.documentElement.clientWidth
+  )
+  if (bodyWidth <= 768) return (items.value = 1.15)
+  if (bodyWidth > 768 && bodyWidth <= 1200) return (items.value = 1.25)
+  if (bodyWidth > 1200) return (items.value = 1.3)
+}
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+  handleResize()
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
+</script>
+
 <script>
 import { Carousel, Slide } from 'vue3-carousel'
-import images from '../assets/images/feedbackCarousel/index'
 import 'vue3-carousel/dist/carousel.css'
 export default {
   components: {
     Carousel,
     Slide
-  },
-  data() {
-    return {
-      currentSlide: 0,
-      itemsToShow: 1.0,
-      images: images
-    }
-  },
-  props: {
-    slides: {
-      type: Array
-    }
-  },
-  created() {
-    window.addEventListener('resize', this.handleResize)
-    this.handleResize()
-  },
-  unmounted() {
-    window.removeEventListener('resize', this.handleResize)
-  },
-  methods: {
-    handleClickPage(value) {
-      this.currentSlide = value
-    },
-    nextSlide() {
-      this.currentSlide += 1
-    },
-    prevSlide() {
-      this.currentSlide -= 1
-    },
-    handleResize() {
-      let bodyWidth = Math.max(
-        document.body.offsetWidth,
-        document.documentElement.offsetWidth,
-        document.body.clientWidth,
-        document.documentElement.clientWidth
-      )
-      if (bodyWidth <= 768) return (this.itemsToShow = 1.2)
-      if (bodyWidth > 768 && bodyWidth <= 1200) return (this.itemsToShow = 1.25)
-      if (bodyWidth > 1200) return (this.itemsToShow = 1.3)
-    }
   }
 }
 </script>
@@ -94,7 +87,6 @@ export default {
 @import ../sass/index
 .carousel
     position: relative
-    margin: 0 -min(50px, 3vw)
     &__slide
         position: relative
         min-height: 20vw
@@ -151,6 +143,7 @@ export default {
         height: 100%
         background: transparent
         border: none
+        cursor: pointer
         &.next
             right: 0
         &.prev

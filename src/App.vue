@@ -1,5 +1,6 @@
 <script setup>
-import slides from '@/data/mainCarousel.js'
+import { ref, onMounted } from 'vue'
+import LoadingPage from '@/components/sections/LoadingPage.vue'
 import MyHeader from '@/components/MyHeader.vue'
 import MainCarousel from '@/components/MainCarousel.vue'
 import AboutSection from '@/components/sections/AboutSection.vue'
@@ -10,9 +11,23 @@ import FaqSection from '@/components/sections/FaqSection.vue'
 import MyFooter from '@/components/MyFooter.vue'
 import MenuModal from '@/components/modals/MenuModal.vue'
 import DiplomasModal from '@/components/modals/DiplomasModal.vue'
+import slides from '@/data/mainCarousel.js'
+
+const isLoaded = ref(false)
+
+onMounted(() => {
+  document.onreadystatechange = () => {
+    if (document.readyState === 'complete') {
+      setTimeout(() => {
+        isLoaded.value = true
+      }, 1500)
+    }
+  }
+})
 </script>
 
 <template>
+  <LoadingPage v-if="!isLoaded" />
   <MyHeader />
   <MainCarousel :slides="slides" />
   <AboutSection />

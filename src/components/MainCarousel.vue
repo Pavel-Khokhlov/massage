@@ -6,7 +6,7 @@
       :items-to-show="1"
       :autoplay="$store.state.isMenuOpen || $store.state.isDiplomasOpen ? 0 : 5000"
       :wrap-around="true"
-      :transition="500"
+      :transition="800"
       :pauseAutoplayOnHover="true"
       :currentSlide="currentSlide"
     >
@@ -102,9 +102,6 @@ export default {
         width: 100%
         background-position: center
         background-size: cover
-    &__image
-        width: 100%
-        height: 100%
     &__info
         position: absolute
         bottom: 33%
