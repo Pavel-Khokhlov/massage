@@ -58,7 +58,6 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
   &.service
     // background: rgb(242, 242, 242)
     width: min(1000px, 100%)
-    height: calc(100vh - $header-height)
     margin: 0 auto
     padding-top: 0
     padding-bottom: min(100px, 10vw)
