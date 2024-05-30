@@ -4,20 +4,18 @@
       ref="carousel"
       v-model="currentSlide"
       :items-to-show="1"
-      :autoplay="
-        $store.state.isMenuOpen || $store.state.isDiplomasOpen ? 0 : 5000
-      "
+      :autoplay="$store.state.isMenuOpen || $store.state.isDiplomasOpen ? 0 : 5000"
       :wrap-around="true"
       :transition="500"
       :pauseAutoplayOnHover="true"
       :currentSlide="currentSlide"
     >
       <slide
-        v-for="slide in slides"
+        v-for="slide in props.slides"
         :key="slide.id"
         class="carousel__slide"
         :style="{
-          backgroundImage: `url(${images[isMobile ? `${slide.path}` : `${slide.path}_d`]})`,
+          backgroundImage: `url(${images[isMobile ? `${slide.path}` : `${slide.path}_d`]})`
         }"
       >
         <div class="carousel__info">
@@ -26,32 +24,20 @@
           <button
             type="button"
             class="carousel__button"
-            @click="handleClickOrder(slide.path)"
+            @click="setCurrentMessageForOrder(slide.path)"
           >
             <span>Записаться</span
-            ><img
-              :src="doubleArrow"
-              alt="иконка перейти записаться"
-              class="carousel__nav-icon"
-            />
+            ><img :src="doubleArrow" alt="иконка перейти записаться" class="carousel__nav-icon" />
           </button>
         </div>
       </slide>
 
       <template #addons>
-        <button @click="prevSlide" class="carousel__nav prev">
-          <img
-            :src="arrowPrev"
-            alt="иконка предыдущий слайдер"
-            class="carousel__nav-icon"
-          />
+        <button @click="currentSlide--" class="carousel__nav prev">
+          <img :src="arrowPrev" alt="иконка предыдущий слайдер" class="carousel__nav-icon" />
         </button>
-        <button @click="nextSlide" class="carousel__nav next">
-          <img
-            :src="arrowNext"
-            alt="иконка следующий слайдер"
-            class="carousel__nav-icon"
-          />
+        <button @click="currentSlide++" class="carousel__nav next">
+          <img :src="arrowPrev" alt="иконка следующий слайдер" class="carousel__nav-icon next" />
         </button>
         <div class="carousel__pagination">
           <button
@@ -60,7 +46,7 @@
             type="button"
             class="carousel__dot"
             :class="{ _active: currentSlide === index }"
-            @click="handleClickPage(index)"
+            @click="() => (currentSlide = index)"
           ></button>
         </div>
       </template>
@@ -68,62 +54,39 @@
   </section>
 </template>
 
-<script>
-import { computed } from "vue";
-import { mapMutations } from "vuex";
-import { Carousel, Slide } from "vue3-carousel";
-import "vue3-carousel/dist/carousel.css";
-import images from "@/assets/images/mainCarousel/index";
-import arrowPrev from "@/assets/images/icons/arrowPrev.svg";
-import arrowNext from "@/assets/images/icons/arrowNext.svg";
-import doubleArrow from "@/assets/images/icons/double-arrow.svg";
+<script setup>
+import { computed, ref } from 'vue'
+import images from '@/assets/images/mainCarousel/index'
+import arrowPrev from '@/assets/images/icons/arrowPrev.svg'
+import doubleArrow from '@/assets/images/icons/double-arrow.svg'
+
+import { useStore } from 'vuex'
+const store = useStore()
 
 const isMobile = computed(() => {
-  return screen.width <= 760;
-});
+  return screen.width <= 760
+})
 
+const currentSlide = ref(0)
+
+const props = defineProps({
+  slides: {
+    type: Array
+  }
+})
+
+const setCurrentMessageForOrder = (v) => store.commit('setCurrentMessageForOrder', v)
+</script>
+
+<script>
+import { Carousel, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
 export default {
   components: {
     Carousel,
-    Slide,
-  },
-  setup() {
-    return {
-      arrowPrev,
-      arrowNext,
-      doubleArrow,
-    };
-  },
-  data() {
-    return {
-      currentSlide: 0,
-      images: images,
-      isMobile: isMobile,
-    };
-  },
-  props: {
-    slides: {
-      type: Array,
-    },
-  },
-  methods: {
-    ...mapMutations([
-      "setCurrentMessageForOrder", // `this.setCurrentMessageForOrder(value)` будет вызывать `this.$store.commit('setCurrentMessageForOrder', value)`
-    ]),
-    handleClickPage(value) {
-      this.currentSlide = value;
-    },
-    nextSlide() {
-      this.currentSlide += 1;
-    },
-    prevSlide() {
-      this.currentSlide -= 1;
-    },
-    handleClickOrder(value) {
-      this.setCurrentMessageForOrder(value);
-    },
-  },
-};
+    Slide
+  }
+}
 </script>
 
 <style lang="sass" scoped>
@@ -151,7 +114,7 @@ export default {
         background: rgba($base-white-color, 0.6)
         padding: min(15px, 3vw)
         border-radius: 10px
-        box-shadow: 2px 2px 4px rgba($base-black-color, 0.3)
+        // box-shadow: 2px 2px 4px rgba($base-black-color, 0.3)
         display: flex
         flex-direction: column
         gap: min(30px, 2vw)
@@ -175,7 +138,7 @@ export default {
         font-weight: 500
         font-size: $text-main-title
         color: $base-black-color
-        text-shadow: 1px 1px 2px rgba($base-black-color, 0.1)
+        // text-shadow: 1px 1px 2px rgba($base-black-color, 0.1)
         margin: 0
         @media screen and (min-width: 1000px)
             font-size: min(120px, 9vw)
@@ -196,13 +159,13 @@ export default {
         height: min(60px, 12vw)
         border: none
         border-radius: min(12px, 2vw)
-        background: #2c3e50
-        background: -webkit-linear-gradient(to right, #3498db, #2c3e50)
-        background: linear-gradient(to right, #3498db, #2c3e50)
+        background: rgba(0, 0, 255, 0.5)
+        // background: -webkit-linear-gradient(to right, #3498db, #2c3e50)
+        // background: linear-gradient(to right, #3498db, #2c3e50)
         font-weight: 400
         font-size: $text-main-button
         color: $base-white-color
-        box-shadow: 2px 2px 4px rgba($base-black-color, 0.3)
+        // box-shadow: 2px 2px 4px rgba($base-black-color, 0.3)
         margin-top: 5vw
         cursor: pointer
         display: flex
@@ -244,6 +207,8 @@ export default {
         &-icon
             width: min(40px, 6vw)
             height: min(40px, 6vw)
+            &.next
+                transform: rotate(180deg)
     &__pagination
         position: absolute
         display: flex
