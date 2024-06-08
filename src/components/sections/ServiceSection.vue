@@ -54,7 +54,8 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
     &__list
         display: flex
         flex-direction: column
-        gap: min(30px, 6vw)
+        gap: min(30px, 4vw)
+        margin: 0
         &_item
             font-size: $text-section-text
             font-weight: 300
@@ -91,7 +92,7 @@ const isCurrentServiceShown = (id) => store.commit('isCurrentServiceShown', id)
         display: block
         width: min(400px, 100%)
         margin: 0 auto
-        border-radius: min(20px, 2vw)
+        border-radius: min(12px, 2vw)
     &__text
         font-size: $text-main-text
         line-height: 1.3

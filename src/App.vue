@@ -20,7 +20,7 @@ onMounted(() => {
     if (document.readyState === 'complete') {
       setTimeout(() => {
         isLoaded.value = true
-      }, 1500)
+      }, 3000)
     }
   }
 })
@@ -68,7 +68,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
     width: min(1000px, 100%)
     margin: 0 auto
     padding-top: 0
-    padding-bottom: min(100px, 10vw)
+    padding-bottom: 0
     box-sizing: border-box
   &.service
     // background: rgb(242, 242, 242)
