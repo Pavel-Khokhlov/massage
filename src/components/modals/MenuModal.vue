@@ -16,7 +16,7 @@ const props = defineProps({
 </script>
 
 <style lang="sass">
-@import ../../sass/index
+@import @/sass/index
 .menu-modal
   position: fixed
   top: 0

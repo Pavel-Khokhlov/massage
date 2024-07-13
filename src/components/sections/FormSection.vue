@@ -77,9 +77,9 @@
           class="form__button form__button_submit"
           :class="{ _active: isFormCompleted }"
           :disabled="!isFormCompleted"
-          @click="submitForm"
+          @click="submit"
         >
-          Отправить
+          {{ isSending ? 'Отправляется...' : 'Отправить' }}
         </button>
       </div>
     </form>
@@ -88,7 +88,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import api from '@/api'
+import { submitForm } from '@/api/form'
 import images from '@/assets/images/icons/index'
 
 const COMMUNICATION = {
@@ -105,7 +105,8 @@ export default {
       communications: ['phone', 'telegram', 'whatsapp', 'email'],
       isFormCompleted: false,
       isFormClear: true,
-      images: images
+      images: images,
+      isSending: false
     }
   },
   methods: {
@@ -124,14 +125,16 @@ export default {
       this.resetForm()
       this.isFormCompleted = false
       this.isFormClear = true
+      this.isSending = false
     },
-    async submitForm() {
+    async submit() {
+      this.isSending = true
       let message = `Request: Pravilo / Massage%0AName: ${this.$store.state.formState.name}%0ACommunication: ${this.$store.state.formState.contactType}%0AContact: ${this.$store.state.formState.contact}%0AMessage: ${this.$store.state.formState.message}`
       try {
-        await api.post(
-          `/sendMessage?chat_id=${import.meta.env.VITE_TELEGRAM_CHAT_ID}&text=${message}`
-        )
-        this.handleClearForm()
+        const result = await submitForm(message)
+        if (result.message === 200) {
+          this.handleClearForm()
+        }
       } catch (e) {
         console.error(e)
       }
@@ -171,6 +174,11 @@ export default {
     display: flex
     flex-direction: column
     gap: min(28px, 7vw)
+    &-faq
+        margin: 0 auto
+        display: flex
+        flex-direction: column
+        width: min(1000px, 100%)
     &__radiobuttons
         display: flex
         flex-direction: row
@@ -207,6 +215,17 @@ export default {
           font-family: RobotoFlex
           width: 100%
           height: auto
+          box-sizing: border-box
+          &._faq
+            padding: min(10px, 2vw) min(15px, 3vw)
+            margin-bottom: min(30px, 5vw)
+            background: $base-white-color
+            border-radius: min(6px, 1vw)
+            border: 0.5px solid $base-silver-color
+            &:focus
+              outline: none
+              border: 0.5px solid $base-brand-color
+              box-shadow: 0 0 3px rgba($base-brand-color, 0.6)
     &__label
         font-size: $text-form-label
         font-weight: 400
@@ -219,17 +238,17 @@ export default {
         display: flex
         flex-direction: row
         justify-content: space-between
-        padding: 0 min(30px, 3vw)
         margin-top: min(40px, 5vw)
         @media screen and (min-width: 768px)
             padding: 0
             justify-content: flex-end
             gap: 20px
     &__button
+        width: min(250px, 43vw)
         border: none
         background: transparent
         border-radius: min(12px, 2vw)
-        padding: 10px 30px
+        padding: 10px
         font-size: $text-main-button
         cursor: pointer
         &_clear
@@ -241,8 +260,12 @@ export default {
         &_submit
             color: rgba(white, 1)
             background: $base-silver-color
+            cursor: default
+            &._faq
+                align-self: flex-end
             &._active
                 background: $base-brand-color
+                cursor: pointer
         &_radio
             width: 40px
             height: 40px

@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import LoadingPage from '@/components/sections/LoadingPage.vue'
+// import { ref, onMounted } from 'vue'
+// import LoadingPage from '@/components/sections/LoadingPage.vue'
 import MyHeader from '@/components/MyHeader.vue'
 import MainCarousel from '@/components/MainCarousel.vue'
 import AboutSection from '@/components/sections/AboutSection.vue'
@@ -12,8 +12,9 @@ import MyFooter from '@/components/MyFooter.vue'
 import MenuModal from '@/components/modals/MenuModal.vue'
 import DiplomasModal from '@/components/modals/DiplomasModal.vue'
 import slides from '@/data/mainCarousel.js'
+import diplomas from '@/data/dataDiplomas.js'
 
-const isLoaded = ref(false)
+/* const isLoaded = ref(false)
 
 onMounted(() => {
   document.onreadystatechange = () => {
@@ -23,11 +24,11 @@ onMounted(() => {
       }, 3000)
     }
   }
-})
+}) */
 </script>
 
 <template>
-  <LoadingPage v-if="!isLoaded" />
+  <!-- <LoadingPage v-if="!isLoaded" /> -->
   <MyHeader />
   <MainCarousel :slides="slides" />
   <AboutSection />
@@ -63,7 +64,7 @@ input[type="file"] > input[type="button"]::-moz-focus-inner
     border: none
 .section
   margin-bottom: min(50px, 10vw)
-  padding: min(50px, 5vw) min(200px, 5vw)
+  padding: min(50px, 5vw) min(200px, 4vw)
   &.about
     width: min(1000px, 100%)
     margin: 0 auto
